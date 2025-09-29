@@ -4,6 +4,11 @@ catkin_ws/build/
 catkin_ws/logs/
 catkin_ws/install/
 
+# generate by colcon workspaces
+colcon_ws/build/
+colcon_ws/install/
+colcon_ws/log/
+
 # catkin tools
 catkin_ws/.catkin_tools/
 
