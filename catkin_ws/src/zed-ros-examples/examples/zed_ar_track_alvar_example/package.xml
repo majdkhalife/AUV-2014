@@ -14,6 +14,5 @@
   <buildtool_depend>catkin</buildtool_depend>  
 
   <exec_depend>ar_track_alvar</exec_depend>
-  <exec_depend>ar_track_alvar_msgs</exec_depend>
   <exec_depend>zed_wrapper</exec_depend>
 </package>
