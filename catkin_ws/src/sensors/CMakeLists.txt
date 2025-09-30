@@ -17,7 +17,6 @@ find_package(catkin REQUIRED COMPONENTS
 )
 
 find_package(Boost REQUIRED COMPONENTS system)
-find_package(Eigen3 3.3 REQUIRED)
 
 catkin_package(
   CATKIN_DEPENDS
@@ -36,7 +35,6 @@ catkin_package(
 include_directories(
   ${catkin_INCLUDE_DIRS}
   ${serial_INCLUDE_DIRS}
-  ${Eigen3_INCLUDE_DIRS}
 )
 
 ## Compile executables
