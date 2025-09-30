@@ -62,18 +62,15 @@ RUN git clone https://github.com/JPGC04/custom_ros.git;       \
       time colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release;
 
 # 7.) Compile ros1_bridge
-RUN source /opt/ros/humble/setup.bash;                                                          \
+RUN source /opt/ros/humble/setup.bash; \
     source ros_tutorials/install/setup.bash;                                                  \
     source common_tutorials/install/setup.bash;                                                  \
     apt-get -y install ros-humble-example-interfaces ros-humble-action-tutorials-interfaces;  \
     apt-get -y install ros-humble-action-tutorials-cpp ros-humble-action-tutorials-py;        \
     source /opt/ros/humble/setup.bash;								\
-
     ls -la /custom_ros/catkin_ws/; \
-
     source /custom_ros/catkin_ws/src/auv_msgs/install/setup.bash;                                  \
     source /custom_ros/colcon_ws/src/auv_msgs/install/setup.bash;                                  \
-    
     # Finally, build the Bridge                                                                 \
     mkdir -p /ros-humble-ros1-bridge/src;                                                       \
     cd /ros-humble-ros1-bridge/src;                                                             \
@@ -118,5 +115,18 @@ RUN ROS1_LIBS="libxmlrpcpp.so";                                                 
 # 10.) Spit out ros1_bridge tarball by default when no command is given
 RUN tar czf /ros-humble-ros1-bridge.tgz \
      --exclude '*/build/*' --exclude '*/src/*' /ros-humble-ros1-bridge
+
+RUN apt-get install -y --no-install-recommends -qq python3-pip
+
+RUN git clone -b humble https://github.com/majdkhalife/auv-2014.git /tmp/auv-2014 && \
+    cd /tmp/auv-2014/colcon_ws && \
+    source /opt/ros/humble/setup.bash && \
+    apt-get update && \
+    rosdep update && \
+    rosdep install --from-paths src --ignore-src -y && \
+    colcon build && \
+    source install/local_setup.bash && \
+    rm -rf /tmp/auv-2014
+
 ENTRYPOINT []
 CMD cat /ros-humble-ros1-bridge.tgz; sync

@@ -1,0 +1,93 @@
+name: Docker Build & Push for ros2
+
+on:
+  push:
+    branches: [humble]
+  pull_request:
+    branches: [humble]
+  workflow_dispatch:
+
+jobs:
+  build-and-push-ros1-amd64:
+    name: ros1-amd64 Docker image
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Free Disk Space
+        uses: netbrain/free-disk-space-action@v0.0.1
+
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build image
+        uses: docker/build-push-action@v5
+        with:
+          context: Docker/ros2
+          file: Docker/ros2/Dockerfile.ros1
+          platforms: linux/amd64
+    
+  build-and-push-ros1-arm64:
+    name: ros1-arm64 Docker image
+    runs-on: ubuntu-22.04-arm
+
+    steps:
+      - name: Free Disk Space
+        uses: netbrain/free-disk-space-action@v0.0.1
+
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build image
+        uses: docker/build-push-action@v5
+        with:
+          context: Docker/ros2
+          file: Docker/ros2/Dockerfile.ros1
+          platforms: linux/arm64
+
+  build-and-push-ros2-amd64:
+    name: ros2-amd64 Docker image
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Free Disk Space
+        uses: netbrain/free-disk-space-action@v0.0.1
+
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build image
+        uses: docker/build-push-action@v5
+        with:
+          context: Docker/ros2
+          file: Docker/ros2/Dockerfile.ros2
+          platforms: linux/amd64
+    
+  build-and-push-ros2-arm64:
+    name: ros2-arm64 Docker image
+    runs-on: ubuntu-22.04-arm
+
+    steps:
+      - name: Free Disk Space
+        uses: netbrain/free-disk-space-action@v0.0.1
+
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build image
+        uses: docker/build-push-action@v5
+        with:
+          context: Docker/ros2
+          file: Docker/ros2/Dockerfile.ros2
+          platforms: linux/arm64

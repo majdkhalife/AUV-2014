@@ -51,6 +51,14 @@ RUN apt-get update -qq \
         ros-noetic-nmea-msgs \
         ros-noetic-mavros-msgs \
         ros-noetic-serial \
+        ros-noetic-imu-tools \
+        ros-noetic-image-transport-plugins \
+        ros-noetic-depthimage-to-laserscan \
+        ros-noetic-usb-cam \
+        ros-noetic-rqt-plot \
+        ros-noetic-tf \
+        ros-noetic-tf2-ros \
+        ros-noetic-tf2-geometry-msgs \
     && curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/*
 
@@ -63,6 +71,16 @@ RUN pip install -qq --no-cache-dir -r requirements.txt \
 
 # Set shell to bash
 SHELL ["/bin/bash", "-c"]
+
+RUN git clone -b humble https://github.com/majdkhalife/auv-2014.git /tmp/auv-2014 && \
+    cd /tmp/auv-2014/catkin_ws && git submodule update --init --recursive && \
+    source /opt/ros/noetic/setup.bash && \
+    apt-get update && \
+    rosdep update && \
+    rosdep install --from-paths src --ignore-src -y && \
+    catkin build && \
+    source devel/setup.bash && \
+    rm -rf /tmp/auv-2014
 
 # Add source to bashrc
 RUN echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc \
